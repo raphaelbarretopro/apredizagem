@@ -16,11 +16,22 @@ h1 {
   font-size: 2rem;
   font-weight: 600;
   color: #2a4d69;
-  margin-bottom: 1.5em;
-  margin-top: 1.5em;
+  margin-bottom: 1em;
+  margin-top: 0em;
   text-align: center;
   letter-spacing: 1px;
 }
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2a4d69;
+  margin-bottom: 1.5em;
+  margin-top: 0em;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
 label {
   display: block;
   margin-top: 1.2em;
