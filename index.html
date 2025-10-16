@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Processador de Frequência - Aprendizagem</title>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <div class="container">
+    <div style="text-align:center; margin-bottom: -4em;">
+      <img src="logo.png" alt="Logo" style="max-width:200px; width:40%; height:auto; border-radius:12px; box-shadow:0 2px 8px rgba(42,77,105,0.08);">
+    </div>
+    <h1>Processador de Frequência</h1>
+    <form id="freqForm">
+      <label>Arquivo Ativos:
+        <input type="file" id="ativosCsv" accept=".csv" required />
+      </label>
+      <label>Arquivo Frequência:
+        <input type="file" id="freqXls" accept=".xls,.xlsx" required />
+      </label>
+      <label>Turma:
+        <select id="turmaSelect">
+          <option value="">Todas</option>
+        </select>
+      </label>
+      <label>Empresa:
+        <select id="empresaSelect">
+          <option value="">Todas</option>
+        </select>
+      </label>
+      <button type="submit">Processar e Gerar Relatório</button>
+    </form>
+    <div id="output"></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

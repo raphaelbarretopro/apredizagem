@@ -1,0 +1,79 @@
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+  margin: 0;
+  min-height: 100vh;
+}
+.container {
+  max-width: 520px;
+  margin: 48px auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 32px 28px 24px 28px;
+}
+h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2a4d69;
+  margin-bottom: 1.5em;
+  text-align: center;
+  letter-spacing: 1px;
+}
+label {
+  display: block;
+  margin-top: 1.2em;
+  font-weight: 500;
+  color: #2a4d69;
+}
+input[type="file"], select, button {
+  width: 100%;
+  margin-top: 0.5em;
+  padding: 0.6em 0.8em;
+  border-radius: 8px;
+  border: 1px solid #bfc9d9;
+  font-size: 1em;
+  background: #f7fafd;
+  transition: border-color 0.2s;
+}
+input[type="file"] {
+  background: #f7fafd;
+  border: none;
+  padding: 0.4em 0;
+}
+select:focus, input[type="file"]:focus, button:focus {
+  outline: none;
+  border-color: #2a4d69;
+}
+button {
+  background: linear-gradient(90deg, #2a4d69 0%, #4b86b4 100%);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  margin-top: 1.5em;
+  box-shadow: 0 2px 8px rgba(42,77,105,0.08);
+  transition: background 0.2s;
+}
+button:hover {
+  background: linear-gradient(90deg, #4b86b4 0%, #2a4d69 100%);
+}
+#output {
+  margin-top: 2em;
+  font-size: 1.1em;
+  color: #2a4d69;
+  background: #f7fafd;
+  border-radius: 8px;
+  padding: 1em;
+  min-height: 2em;
+  box-shadow: 0 1px 4px rgba(42,77,105,0.04);
+}
+@media (max-width: 600px) {
+  .container {
+    max-width: 98vw;
+    padding: 18px 8px 12px 8px;
+  }
+  h1 {
+    font-size: 1.3rem;
+  }
+}
