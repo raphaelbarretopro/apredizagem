@@ -594,7 +594,25 @@ document.getElementById('freqForm').addEventListener('submit', async function (e
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'relatorio_frequencia.xlsx';
+      // Construir nome dinâmico: relatorio_frequencia_MES-ANO_CODTURMA_NOMEEMPRESA_NOVO
+      try {
+        const sanitize = s => String(s || '').replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_\-\.]/g, '').substring(0, 60);
+        // monthYearText -> esperamos 'MM/YYYY' ou 'MM/YYYY' -> transformar para 'MM-YYYY'
+        let mesAno = '';
+        if (monthYearText && typeof monthYearText === 'string') {
+          mesAno = monthYearText.replace('/', '-');
+        }
+        const turmaPart = sanitize(turmaFiltro || 'SEM_TURMA');
+        const mesAnoPart = sanitize(mesAno || 'SEM_MES-ANO');
+        // Se o usuário escolheu 'Todas' as empresas (empresaFiltro vazio), OMITIR o nome da empresa no filename
+        const includeEmpresa = !!(empresaFiltro && String(empresaFiltro).trim());
+        const filename = includeEmpresa
+          ? `relatorio_frequencia_${mesAnoPart}_${turmaPart}_${sanitize(companyText)}.xlsx`
+          : `relatorio_frequencia_${mesAnoPart}_${turmaPart}.xlsx`;
+        a.download = filename;
+      } catch (e) {
+        a.download = 'relatorio_frequencia.xlsx';
+      }
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
