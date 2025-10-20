@@ -3,39 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <title>Processador de Frequência - Aprendizagem</title>
+  <!-- Dependências carregadas via CDN:
+       1) xlsx (SheetJS) - leitura de .xls/.xlsx no navegador
+       2) papaparse - parser CSV tolerante (usado para 'Ativos' ; delimiter ';')
+       3) exceljs - geração do arquivo .xlsx final com estilos
+       Observação: essas bibliotecas são carregadas no <head> para garantir
+       que estejam disponíveis quando os scripts em src/ forem executados.
+  -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
+  <!-- Folha de estilo principal da aplicação -->
   <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
   <div class="container">
+    <!-- Cabeçalho visual: logo e títulos -->
     <div style="text-align:center;">
-  <img src="logo.png" alt="Logo" style="max-width:200px; width:40%; height:auto;">
+      <img src="logo.png" alt="Logo" style="max-width:200px; width:40%; height:auto;">
     </div>
     <h2>Aprendizagem Industrial</h2>
     <h1>Processador de Frequência</h1>
+
+    <!--
+      Formulário principal da aplicação.
+      Elementos importantes referenciados pelo código JavaScript (src/ui.js):
+        - #ativosCsv : input file para o CSV 'Ativos' (obrigatório)
+        - #freqXls  : input file para a planilha de frequência .xls/.xlsx (obrigatório)
+        - #turmaSelect : select dinâmico preenchido com valores de CODTURMA do CSV
+        - #empresaSelect : select dinâmico preenchido com NOMEEMPRESA_NOVO do CSV
+        - #freqForm : id do form que é submetido pelo script para iniciar o processamento
+        - #output : área onde o app escreve mensagens de progresso/erro para o usuário
+
+      Observações de uso
+      - O app foi desenhado para rodar 100% no navegador (sem servidor).
+      - O CSV de 'Ativos' deve usar ';' como separador (compatível com PapaParse).
+      - A planilha de Frequência pode ser .xls ou .xlsx; o SheetJS decodifica ambos.
+    -->
     <form id="freqForm">
       <label>Arquivo Ativos (Mês Atual):
+        <!-- aceitamos apenas .csv -->
         <input type="file" id="ativosCsv" accept=".csv" required />
       </label>
       <label>Arquivo Frequência (Mês Atual):
+        <!-- aceitamos .xls e .xlsx -->
         <input type="file" id="freqXls" accept=".xls,.xlsx" required />
       </label>
       <label>Turma:
+        <!-- Opção padrão 'Todas' + opções preenchidas dinamicamente em src/ui.js -->
         <select id="turmaSelect">
           <option value="">Todas</option>
         </select>
       </label>
       <label>Empresa:
+        <!-- Opção padrão 'Todas' + opções preenchidas dinamicamente em src/ui.js -->
         <select id="empresaSelect">
           <option value="">Todas</option>
         </select>
       </label>
       <button type="submit">Processar e Gerar Relatório</button>
     </form>
+
+    <!-- Área onde mensagens (sucesso/erro/progresso) são exibidas ao usuário -->
     <div id="output"></div>
   </div>
-  <script src="app.js"></script>
+
+  <!--
+    Scripts da aplicação (módulos em src/). A ordem é importante:
+      1) utils.js  - funções utilitárias usadas por todos
+      2) io.js     - leituras de arquivo (FileReader + fallback de encoding)
+      3) csvParser.js - wrapper para PapaParse (parser CSV)
+      4) xlsxReader.js - heurísticas para localizar colunas/linhas e datas na planilha
+      5) processor.js - lógica principal de cruzamento por RA e contagem de faltas/atrasos
+      6) exporter.js  - geração do arquivo Excel final (ExcelJS)
+      7) ui.js        - liga o DOM à lógica, popula selects e inicia processamento
+
+    Importante: o `exporter.js` precisa carregar antes do `ui.js` (o UI chama
+    a função de exportação). A ordem abaixo garante dependências satisfeitas.
+  -->
+  <script src="src/utils.js"></script>
+  <script src="src/io.js"></script>
+  <script src="src/csvParser.js"></script>
+  <script src="src/xlsxReader.js"></script>
+  <script src="src/processor.js"></script>
+  <script src="src/exporter.js"></script>
+  <script src="src/ui.js"></script>
 </body>
 </html>
